@@ -7,6 +7,8 @@ pub struct Camera {
 	pub	bottom_y:i32,
 }
 
+
+
 impl Camera {
 	pub fn new(player_position: Point) -> Self {
 		Self {	left_x: player_position.x - DISPLAY_WIDTH / 2,
