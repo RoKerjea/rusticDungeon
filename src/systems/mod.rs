@@ -4,6 +4,7 @@ mod random_move;
 mod entity_render;
 mod collisions;
 mod end_turn;
+mod hud;
 mod movements;
 
 use crate::prelude::*;
