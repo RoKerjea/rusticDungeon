@@ -67,7 +67,8 @@ impl GameState for State {
 		ctx.set_active_console(2);
 		ctx.cls();
         self.resources.insert(ctx.key);
-        // self.systems.execute(&mut self.ecs, &mut self.resources);
+		ctx.set_active_console(0);//needed to get the mouse coordinates from the correct layer
+		self.resources.insert(Point::from_tuple(ctx.mouse_pos()));
         let current_state = self.resources.get::<TurnState>().unwrap().clone();
         match current_state {
             TurnState::AwaitingInput => self.input_systems.execute(
