@@ -2,9 +2,11 @@ use crate::prelude::*;
 mod empty;
 mod rooms;
 mod automata;
+mod drunkard;
 use rooms::RoomsArchitect;
 use empty::EmptyArchitect;
 use automata::CellularAutomataArchitect;
+use drunkard::DrunkardsWalkArchitect;
 
 const NUM_ROOMS: usize = 20;
 
@@ -22,8 +24,13 @@ pub struct MapBuilder {
 
 impl MapBuilder {
 	pub fn new(rng: &mut RandomNumberGenerator) -> Self {
-		let mut architect = CellularAutomataArchitect{};
-		architect.new(rng)
+		let mut architect:Box<dyn MapArchitect> = match rng.range(0, 3) {
+			0 => Box::new(RoomsArchitect{}),
+			1 => Box::new(CellularAutomataArchitect{}),
+			_ => Box::new(DrunkardsWalkArchitect{}),
+		};
+		let mb = architect.new(rng);
+		mb
 	}
 	fn build_random_rooms(&mut self, rng : &mut RandomNumberGenerator) {
 		while self.rooms.len() < NUM_ROOMS {
